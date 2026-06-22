@@ -7,13 +7,13 @@ export async function getServerSideProps({ params }) {
   const supabase = getServiceSupabase();
   const { slug } = params;
 
-  const { data: school } = await supabase
+  const { data: school, error: schoolError } = await supabase
     .from('schools')
-    .select('id, name, location, description, instructor, subscription_status, slug')
+    .select('id, name, location, description, owner_name, subscription_status, slug')
     .eq('slug', slug)
     .single();
 
-  if (!school || school.subscription_status !== 'active') {
+  if (schoolError || !school || school.subscription_status !== 'active') {
     return { notFound: true };
   }
 
@@ -94,7 +94,7 @@ export default function BookingPage({ school, sessions }) {
           <p className="subtext">Thanks, {formData.name}. {school.name} will confirm your lesson details by email shortly.</p>
           <div className="info-box mt-4">
             <p><strong>School:</strong> {school.name}</p>
-            <p><strong>Instructor:</strong> {school.instructor}</p>
+            <p><strong>Instructor:</strong> {school.owner_name}</p>
             <p><strong>People:</strong> {formData.people}</p>
           </div>
           <Link href="/"><button className="btn-primary mt-6">Back to SurfDesk</button></Link>
@@ -115,7 +115,7 @@ export default function BookingPage({ school, sessions }) {
           <p className="location">{school.location}</p>
           <p className="description">{school.description}</p>
           <div className="details-grid">
-            <div className="detail-card"><p className="detail-label">Instructor</p><p className="detail-value">{school.instructor}</p></div>
+            <div className="detail-card"><p className="detail-label">Instructor</p><p className="detail-value">{school.owner_name}</p></div>
             <div className="detail-card"><p className="detail-label">Lesson length</p><p className="detail-value">90 minutes</p></div>
           </div>
         </div>
