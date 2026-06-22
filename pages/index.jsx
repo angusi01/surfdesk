@@ -111,7 +111,7 @@ export default function Home() {
               <ul style={{listStyle:'none', padding:0, margin:0, display:'flex', flexDirection:'column', gap:'6px'}}>
                 {plan.features.map(f => (
                   <li key={f} style={{fontSize:'0.88rem', display:'flex', alignItems:'center', gap:'8px'}}>
-                    <span style={{color:'#22c55e', fontWeight:700}}>✓</span> {f}
+                    <span style={{color:'#22c55e', fontWeight:700}}>{String.fromCharCode(10003)}</span> {f}
                   </li>
                 ))}
               </ul>
@@ -133,7 +133,7 @@ export default function Home() {
         <div style={{display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(260px, 1fr))', gap:'24px'}}>
           {testimonials.map(t => (
             <blockquote key={t.name} style={{margin:0, background:'#f9f7f4', borderRadius:'12px', padding:'24px', borderLeft:'4px solid #e05'}}>
-              <p style={{fontStyle:'italic', marginBottom:'16px', lineHeight:1.6}}>\u201c{t.quote}\u201d</p>
+              <p style={{fontStyle:'italic', marginBottom:'16px', lineHeight:1.6}}>&ldquo;{t.quote}&rdquo;</p>
               <footer style={{fontSize:'0.85rem', opacity:0.7}}>
                 <strong>{t.name}</strong> &mdash; {t.school}
               </footer>
@@ -144,7 +144,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer style={{borderTop:'1px solid rgba(0,0,0,0.08)', padding:'32px 24px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:'16px', fontSize:'0.85rem', opacity:0.6}}>
-        <span>© 2026 SurfDesk. Built on the Sunshine Coast.</span>
+        <span>&copy; 2026 SurfDesk. Built on the Sunshine Coast.</span>
         <div style={{display:'flex', gap:'24px'}}>
           <Link href="/privacy">Privacy</Link>
           <a href="mailto:hello@surfdesk.app">Contact</a>
