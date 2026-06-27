@@ -18,6 +18,8 @@ export function Layout({ children }) {
             </>
           ) : (
             <>
+              <Link href="/#features">Features</Link>
+              <Link href="/#pricing">Pricing</Link>
               <Link href="/login">Login</Link>
               <Link href="/signup" className="nav-cta">Start Free Trial</Link>
             </>
