@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import Head from 'next/head';
 import posthog from 'posthog-js';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -7,9 +8,21 @@ import { SessionContextProvider } from '@supabase/auth-helpers-react';
 import { CookieConsent } from '../components/CookieConsent';
 import { Layout } from '../components/layout/Layout';
 
+const PAGE_TITLES = {
+  '/': 'SurfDesk | Surf School Booking Software',
+  '/pricing': 'Pricing | SurfDesk',
+  '/login': 'Log in | SurfDesk',
+  '/signup': 'Create an account | SurfDesk',
+  '/dashboard': 'Dashboard | SurfDesk',
+};
+
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [supabaseClient] = useState(() => createPagesBrowserClient());
+  const standalonePage = router.pathname.startsWith('/book/') || router.pathname.startsWith('/dashboard');
+  const pageTitle = router.pathname.startsWith('/book/')
+    ? `Book a lesson | ${pageProps.school?.name ?? 'SurfDesk'}`
+    : PAGE_TITLES[router.pathname] ?? 'SurfDesk';
 
   useEffect(() => {
     if (process.env.NEXT_PUBLIC_POSTHOG_KEY && process.env.NEXT_PUBLIC_POSTHOG_HOST) {
@@ -27,10 +40,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <SessionContextProvider supabaseClient={supabaseClient} initialSession={pageProps.initialSession}>
-      <Layout>
-        <Component {...pageProps} />
-        <CookieConsent />
-      </Layout>
+      <Head><title key="title">{pageTitle}</title></Head>
+      {standalonePage ? <Component {...pageProps} /> : <Layout><Component {...pageProps} /></Layout>}
+      {!router.pathname.startsWith('/book/') ? <CookieConsent /> : null}
     </SessionContextProvider>
   );
 }

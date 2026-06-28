@@ -8,10 +8,13 @@ export default function BookingPage({ school, sessions }) {
       <Head>
         <title>Book a Lesson | {school.name}</title>
       </Head>
-      <main className="page">
-        <h1>{school.name}</h1>
-        <p>Choose an available session and reserve your place.</p>
-        {sessions.length ? <BookingForm sessions={sessions} /> : <p>No upcoming sessions are available.</p>}
+      <main className="public-booking-page">
+        <div className="powered-by powered-by--top">Powered by SurfDesk</div>
+        <header>
+          <h1>{school.name}</h1>
+          <p>Book a session online</p>
+        </header>
+        {sessions.length ? <BookingForm sessions={sessions} /> : <p className="booking-empty">No upcoming sessions are available.</p>}
       </main>
     </>
   );

@@ -1,5 +1,5 @@
 const typography = {
-  fontSans: '"Plus Jakarta Sans", Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fontSans: 'Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   display: {
     weight: '800',
     tracking: '-0.03em',
@@ -36,12 +36,12 @@ const spacing = {
 };
 
 const colors = {
-  bg: '#f0f9ff',
+  bg: '#ffffff',
   surface: '#ffffff',
-  border: '#bae6fd',
-  accent: '#f59e0b',
+  border: '#e2e8f0',
+  accent: '#0ea5e9',
   accent2: '#0ea5e9',
-  textPrimary: '#0c1a2e',
+  textPrimary: '#1e293b',
   textMuted: '#64748b',
   waveDark: '#0f172a',
   danger: '#ef4444',
