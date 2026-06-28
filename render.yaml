@@ -9,7 +9,5 @@ services:
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:
-      - key: NODE_ENV
-        value: production
       - key: NEXT_PUBLIC_APP_URL
         sync: false
