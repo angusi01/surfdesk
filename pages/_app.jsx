@@ -9,17 +9,16 @@ import { CookieConsent } from '../components/CookieConsent';
 import { Layout } from '../components/layout/Layout';
 
 const PAGE_TITLES = {
-  '/': 'SurfDesk | Surf School Booking Software',
-  '/pricing': 'Pricing | SurfDesk',
-  '/login': 'Log in | SurfDesk',
-  '/signup': 'Create an account | SurfDesk',
-  '/dashboard': 'Dashboard | SurfDesk',
+  '/': 'SurfDesk | Generate Your Booking Page',
+  '/generator': 'SurfDesk | Booking Page Generator',
+  '/generator/result': 'SurfDesk | Your Booking Page Is Ready',
+  '/privacy': 'Privacy | SurfDesk',
 };
 
 export default function App({ Component, pageProps }) {
   const router = useRouter();
   const [supabaseClient] = useState(() => createPagesBrowserClient());
-  const standalonePage = router.pathname.startsWith('/book/') || router.pathname.startsWith('/dashboard');
+  const standalonePage = router.pathname.startsWith('/book/');
   const pageTitle = router.pathname.startsWith('/book/')
     ? `Book a lesson | ${pageProps.school?.name ?? 'SurfDesk'}`
     : PAGE_TITLES[router.pathname] ?? 'SurfDesk';

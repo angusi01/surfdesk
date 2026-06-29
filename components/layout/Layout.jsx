@@ -6,6 +6,16 @@ import { Brand } from '../Brand';
 export function Layout({ children }) {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const isHome = router.pathname === '/';
+  const isGenerator = router.pathname.startsWith('/generator');
+  const primaryLink = isGenerator ? '/generator' : '/generator';
+  const primaryLabel = isGenerator ? 'Try the Generator' : 'Try the Generator';
+  const navItems = isHome
+    ? [
+        { href: '#features', label: 'Features' },
+        { href: '#process', label: 'How it Works' },
+      ]
+    : [];
 
   useEffect(() => {
     const closeMenu = () => setMenuOpen(false);
@@ -27,9 +37,11 @@ export function Layout({ children }) {
           <span className="material-symbols-outlined" aria-hidden="true">{menuOpen ? 'close' : 'menu'}</span>
         </button>
         <nav className={menuOpen ? 'site-header__nav site-header__nav--open' : 'site-header__nav'} aria-label="Main navigation">
-          <Link href="/pricing">Pricing</Link>
-          <Link href="/login">Login</Link>
-          <Link href="/signup" className="pill-button pill-button--small">Start Free Trial</Link>
+          {navItems.map((item) => (
+            <Link key={item.href} href={item.href}>{item.label}</Link>
+          ))}
+          {!isHome ? <Link href="/" className="site-header__secondary">Home</Link> : null}
+          <Link href={primaryLink} className="pill-button pill-button--small">{primaryLabel}</Link>
         </nav>
       </header>
       {children}

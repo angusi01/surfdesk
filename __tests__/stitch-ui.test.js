@@ -5,60 +5,55 @@ import { describe, expect, it } from 'vitest';
 const root = join(process.cwd());
 const source = (path) => readFileSync(join(root, path), 'utf8');
 
-describe('SurfDesk Stitch UI contract', () => {
-  it('uses the locked white, Inter, and ocean-blue design system', () => {
+describe('SurfDesk generator UI contract', () => {
+  it('locks the light generator design system', () => {
     const css = source('styles/globals.css');
 
     expect(css).toContain('--ocean: #0ea5e9');
-    expect(css).toContain('--page: #ffffff');
+    expect(css).toContain('--page: #f8f9ff');
     expect(css).toContain('Inter, ui-sans-serif');
+    expect(css).not.toContain('--page: #ffffff');
   });
 
-  it('implements the approved homepage content', () => {
+  it('implements the approved generator homepage copy', () => {
     const home = source('pages/index.jsx');
 
-    expect(home).toContain('Take bookings for your surf school.');
-    expect(home).toContain('Online Bookings');
-    expect(home).toContain('Session Management');
-    expect(home).toContain('Automated Emails');
-    expect(home).not.toContain('Your surf school, booked solid.');
+    expect(home).toContain('Create your surf school booking page in');
+    expect(home).toContain('No code, no login, no monthly fees.');
+    expect(home).toContain('Built for speed, not management');
+    expect(home).toContain('Ready to get your lessons booked?');
+    expect(home).not.toContain('Take bookings for your surf school.');
+    expect(home).not.toContain('Simple, transparent pricing');
   });
 
-  it('provides a dedicated pricing screen with the three approved plans', () => {
-    const pricing = source('pages/pricing.jsx');
+  it('provides the final setup wizard route and content', () => {
+    const wizard = source('pages/generator/index.jsx');
 
-    expect(pricing).toContain('Simple pricing for surf schools');
-    expect(pricing).toContain("price: '$0'");
-    expect(pricing).toContain("price: '$39'");
-    expect(pricing).toContain("price: '$89'");
-    expect(pricing).toContain('Common Questions');
+    expect(wizard).toContain('Step 1 of 3: School Details');
+    expect(wizard).toContain('Waiver Requirement');
+    expect(wizard).toContain('Schools with clear cancellation policies');
+    expect(wizard).toContain("window.location.href = '/generator/result'");
   });
 
-  it('keeps login behavior while using the approved screen copy', () => {
-    const login = source('pages/login.jsx');
+  it('provides the final result page with preview and one-time upsell', () => {
+    const result = source('pages/generator/result.jsx');
 
-    expect(login).toContain('Log in to your account');
-    expect(login).toContain('Create a free account');
-    expect(login).toContain('signInWithPassword');
+    expect(result).toContain('Your booking page is ready!');
+    expect(result).toContain('Booking Page HTML/Link');
+    expect(result).toContain('Confirmation Email Template');
+    expect(result).toContain('Waiver & Policy Text');
+    expect(result).toContain('Unlock full export & hosting for $19');
   });
 
-  it('keeps live booking submission and renders selectable session cards', () => {
-    const booking = source('components/Public/BookingForm.jsx');
+  it('retires legacy saas entry routes through middleware redirects', () => {
+    const middleware = source('middleware.js');
 
-    expect(booking).toContain("fetch('/api/book'");
-    expect(booking).toContain('Book Now');
-    expect(booking).toContain('Confirm booking');
-    expect(booking).toContain('Powered by SurfDesk');
-  });
-
-  it('keeps server-side dashboard data and shows the approved overview sections', () => {
-    const dashboard = source('pages/dashboard/index.jsx');
-
-    expect(dashboard).toContain('createPagesServerClient');
-    expect(dashboard).toContain("Today's Bookings");
-    expect(dashboard).toContain('This Week');
-    expect(dashboard).toContain('Revenue MTD');
-    expect(dashboard).toContain('Upcoming Sessions');
-    expect(dashboard).toContain('Recent Bookings');
+    expect(middleware).toContain("'/dashboard/:path*'");
+    expect(middleware).toContain("'/login'");
+    expect(middleware).toContain("'/signup'");
+    expect(middleware).toContain("'/pricing'");
+    expect(middleware).toContain("'/onboarding/:path*'");
+    expect(middleware).toContain("new URL('/', req.url)");
+    expect(middleware).not.toContain("createMiddlewareClient");
   });
 });
